@@ -8,13 +8,18 @@ import { getEntries } from '@/lib/supabase/queries'
 import { getCurrentUser } from '@/lib/supabase/auth'
 import { Entry } from '@/types/database.types'
 import Link from 'next/link'
+import SearchBar from '@/components/SearchBar'
 
 export default function DashboardPage() {
   const router = useRouter()
   const [entries, setEntries] = useState<Entry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [entryFilter, setEntryFilter] = useState<string>("")
 
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setEntryFilter(e.target.value)
+  }
   useEffect(() => {
     async function loadData() {
       try {
@@ -64,6 +69,7 @@ export default function DashboardPage() {
       <Header />
 
       <main className="max-w-4xl mx-auto py-12" style={{ paddingLeft: '80px', paddingRight: '80px' }}>
+        <SearchBar entryFilter={entryFilter} setEntryFilter={handleOnChange}/>
         <div className="flex items-center justify-between mb-12">
           <div>
             <h2 className="text-3xl font-serif text-dark-brown mb-2">Your Entries</h2>
@@ -87,7 +93,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="space-y-8">
-            {entries.map((entry) => (
+            {entries.filter(entry => JSON.stringify(entry).toLowerCase().includes(entryFilter.toLowerCase())).map((entry) => (
               <EntryCard key={entry.id} entry={entry} />
             ))}
           </div>
