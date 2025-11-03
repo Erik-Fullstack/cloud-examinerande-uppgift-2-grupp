@@ -65,7 +65,7 @@ export default function UpdateBox ({entry, setActive}: EntryCardProps) {
                                 <input
                                     id="title"
                                     type="text"
-                                    value={title}
+                                    value={title.split('Title är:')[1]}
                                     onChange={(e) => setTitle(e.target.value)}
                                     className="input-field text-xl font-serif"
                                     placeholder="Change title..."

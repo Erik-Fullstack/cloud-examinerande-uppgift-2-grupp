@@ -31,9 +31,10 @@ export default function EntryCard({ entry }: EntryCardProps) {
       <p className="text-dark-brown/80 leading-relaxed whitespace-pre-wrap" style={{ width: '550px' }}>
         {entry.content}
       </p>
-      <button onClick={() => setActive(!active)} className="text-warm-gray hover:text-dark-brown cursor-pointer text-sm mb-4">Change task📝</button>
+
+      <button onClick={() => setActive(!active)} className="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-1 rounded cursor-pointer mr-2">{!active ? 'Change entry': 'Close'}</button>
       {active && <UpdateBox entry={entry} setActive={setActive} ></UpdateBox> }
-      <button onClick={() => deleteEntry(entry.id)} className="text-warm-gray hover:text-dark-brown cursor-pointer text-sm mb-4">🗑️</button>
+      <button onClick={() => deleteEntry(entry.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-1 rounded cursor-pointer ml-auto">Delete task</button>
     </div>
   )
 }
