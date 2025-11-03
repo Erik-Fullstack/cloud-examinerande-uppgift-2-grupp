@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS public.entries (
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
+    reaction TEXT CHECK("reaction" IN ('like', 'love', 'happy', 'sad', 'angry')),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
@@ -21,6 +22,7 @@ CREATE POLICY "Users can insert their own entries"
     ON public.entries
     FOR INSERT
     WITH CHECK (auth.uid() = user_id);
+
 
 -- Create index for better query performance
 CREATE INDEX IF NOT EXISTS entries_user_id_idx ON public.entries(user_id);
