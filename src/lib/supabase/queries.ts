@@ -1,5 +1,5 @@
 import { supabase } from './client'
-import { Entry, NewEntry } from '@/types/database.types'
+import { Entry, NewEntry, UpdateEntry } from '@/types/database.types'
 
 /**
  * Fetch all entries for the authenticated user
@@ -52,4 +52,26 @@ export async function createEntry(entry: NewEntry): Promise<Entry> {
   }
 
   return data
+}
+
+export async function updateEntry(entry: UpdateEntry): Promise<Entry> {
+  console.log(entry.title)
+  const {data: { user} } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error(`User not Authenticated`)
+  }
+
+  const { data, error } = await supabase
+    .from('entries')
+    .update({title: entry.title, content: entry.content})
+    .eq('id', entry.id)
+    .select()
+    .single();
+
+    if (error) {
+      throw error
+    }
+
+    return data
 }
