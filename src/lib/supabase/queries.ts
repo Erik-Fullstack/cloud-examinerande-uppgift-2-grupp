@@ -55,7 +55,6 @@ export async function createEntry(entry: NewEntry): Promise<Entry> {
 }
 
 export async function updateEntry(entry: UpdateEntry): Promise<Entry> {
-  console.log(entry.title)
   const {data: { user} } = await supabase.auth.getUser();
 
   if (!user) {
@@ -74,4 +73,23 @@ export async function updateEntry(entry: UpdateEntry): Promise<Entry> {
     }
 
     return data
+}
+
+export async function deleteEntry(id: string) {
+  
+  const {data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
+  const { error } = await supabase
+  .from('entries')
+  .delete()
+  .eq('id', id)
+
+  if(error) {
+    throw error 
+  }
+
 }

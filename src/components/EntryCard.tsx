@@ -1,6 +1,7 @@
 'use client'
 import { Entry } from '@/types/database.types'
 import UpdateBox from './updateBox'
+import { deleteEntry } from '@/lib/supabase/queries';
 import { useState } from 'react';
 interface EntryCardProps {
   entry: Entry
@@ -32,7 +33,7 @@ export default function EntryCard({ entry }: EntryCardProps) {
       </p>
       <button onClick={() => setActive(!active)} className="text-warm-gray hover:text-dark-brown cursor-pointer text-sm mb-4">Change task📝</button>
       {active && <UpdateBox entry={entry} setActive={setActive} ></UpdateBox> }
-      
+      <button onClick={() => deleteEntry(entry.id)} className="text-warm-gray hover:text-dark-brown cursor-pointer text-sm mb-4">🗑️</button>
     </div>
   )
 }
