@@ -1,41 +1,58 @@
 @import "tailwindcss";
 
 @theme {
-	--color-cream: #faf8f3;
-	--color-dark-brown: #3e2723;
-	--color-warm-gray: #8d8d8d;
-	--color-beige: #f5f1e8;
+  --color-cream: #faf8f3;
+  --color-dark-brown: #3e2723;
+  --color-warm-gray: #8d8d8d;
+  --color-beige: #f5f1e8;
+
+  --color-dark-bg: #1c1b1a;
+  --color-dark-text: #f5f1e8;
 }
 
 @layer base {
-	body {
-		@apply bg-cream text-dark-brown;
-	}
+  body {
+    @apply bg-cream text-dark-brown;
+  }
+  [data-theme="dark"] {
+    --color-bg: var(--color-dark-bg);
+    --color-text: var(--color-dark-text);
+  }
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply font-serif;
-	}
+  [data-theme="light"] {
+    --color-bg: var(--color-cream);
+    --color-text: var(--color-dark-brown);
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
 }
 
 @layer components {
-	.btn-primary {
-		@apply px-6 py-3 bg-dark-brown text-cream rounded-sm hover:bg-warm-gray transition-colors duration-200 font-sans text-sm tracking-wide;
-	}
+  .btn-primary {
+    @apply px-6 py-3 bg-dark-brown text-cream rounded-sm hover:bg-warm-gray transition-colors duration-200 font-sans text-sm tracking-wide;
+  }
 
-	.btn-secondary {
-		@apply px-6 py-3 border border-dark-brown text-dark-brown rounded-sm hover:bg-beige transition-colors duration-200 font-sans text-sm tracking-wide;
-	}
+  .btn-secondary {
+    @apply px-6 py-3 border border-dark-brown text-dark-brown rounded-sm hover:bg-beige transition-colors duration-200 font-sans text-sm tracking-wide;
+  }
 
-	.input-field {
-		@apply w-full px-4 py-3 border border-warm-gray/30 rounded-sm bg-white focus:outline-none focus:border-dark-brown transition-colors duration-200;
-	}
+  .input-field {
+    @apply w-full px-4 py-3 border border-warm-gray/30 rounded-sm bg-white focus:outline-none focus:border-dark-brown transition-colors duration-200;
+  }
 
-	.card {
-		@apply bg-white border border-warm-gray/20 rounded-sm p-8 shadow-sm;
-	}
+  .card {
+    @apply bg-white border border-warm-gray/20 rounded-sm p-8 shadow-sm;
+  }
 }

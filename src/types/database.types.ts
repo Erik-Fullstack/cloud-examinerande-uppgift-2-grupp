@@ -1,3 +1,5 @@
+
+
 export interface Entry {
   id: string
   user_id: string
@@ -10,4 +12,10 @@ export interface Entry {
 export interface NewEntry {
   title: string
   content: string
+}
+
+export interface UpdateEntry {
+  title: string
+  content: string
+  id: string
 }
