@@ -39,7 +39,7 @@ export async function createEntry(entry: NewEntry): Promise<Entry> {
     .insert([
       {
         user_id: user.id,
-        title: `Title är: ${entry.title}`,
+        title: entry.title,
         content: entry.content,
         created_at: new Date().toISOString()
       }
