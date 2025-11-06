@@ -63,7 +63,7 @@ export async function updateEntry(entry: UpdateEntry): Promise<Entry> {
 
   const { data, error } = await supabase
     .from('entries')
-    .update({title: `Title är: ${entry.title}`, content: entry.content})
+    .update({title: entry.title, content: entry.content})
     .eq('id', entry.id)
     .select()
     .single();
