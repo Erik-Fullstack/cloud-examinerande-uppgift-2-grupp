@@ -1,0 +1,71 @@
+import { useState } from "react";
+import { updateEntryReaction } from "@/lib/supabase/queries";
+import { Entry } from "@/types/database.types";
+import { emoji } from "zod";
+
+type Reactionprops = { 
+  entry: Entry;
+};
+
+export default function ReactionButtons({entry}: Reactionprops) {
+const [current, setCurrent] = useState<Entry['reaction']>(entry.reaction);
+const [hovered, setHovered] = useState(false)
+
+let hoverTimeout: ReturnType<typeof setTimeout>
+
+function handleMouseEnter() {
+  clearTimeout(hoverTimeout)
+  hoverTimeout = setTimeout(() => setHovered(true), 50)
+}
+
+function handleMouseLeave() {
+  clearTimeout(hoverTimeout)
+  hoverTimeout = setTimeout(() => setHovered(false), 200)
+}
+
+const REACTIONS = [
+  {type: 'like', emoji: '👍'},
+  {type:'love', emoji: '❤️'},
+  {type: 'happy', emoji: '😊'},  
+  {type: 'sad', emoji: '😢'}, 
+  {type: 'angry', emoji: '😠'},
+] as const  
+
+  async function handleClick(type: Entry['reaction']) {
+    const newReaction = current === type ? null : type;
+
+    setCurrent(newReaction);
+    await updateEntryReaction(entry.id, newReaction ?? null );
+  }
+
+  return (
+    <div
+  className="relative inline-block"
+  onMouseEnter={() => setHovered(true)}
+  onMouseLeave={() => setHovered(false)}
+>
+  
+  <button className="text-xl opacity-70 hover:opacity-100 transition">
+    {current ? REACTIONS.find(r => r.type === current)?.emoji : '⭐️'}
+  </button>
+
+  <div className="absolute -top-4 -right-4 -left-4 -bottom-4"></div>
+  
+  {hovered && (
+    <div className="absolute top-0 right-full mr-2 flex gap-2 bg-white/10 rounded-xl p-2 shadow-lg backdrop-blur-sm animate-fade-in z-10">
+      {REACTIONS.map((r) => (
+        <button
+          key={r.type}
+          onClick={() => handleClick(r.type)}
+          className={`text-xl transition ${
+            current === r.type ? 'scale-125' : 'opacity-70 hover:opacity-100'
+          }`}
+        >
+          {r.emoji}
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+  )
+}

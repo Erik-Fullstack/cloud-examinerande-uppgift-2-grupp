@@ -5,6 +5,7 @@ export interface Entry {
   user_id: string
   title: string
   content: string
+  reaction?: 'like' | 'love' | 'happy' | 'sad' | 'angry' | null
   created_at: string
 }
 

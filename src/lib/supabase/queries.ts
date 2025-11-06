@@ -93,3 +93,25 @@ export async function deleteEntry(id: string) {
   }
 
 }
+
+export async function updateEntryReaction(entryId: string, reactionType: string | null | undefined): Promise<Entry> {
+  
+  const { data: { user } } = await supabase.auth.getUser()
+   if (!user) {
+    throw new Error('User not authenticated')
+   }
+
+   const { data, error } = await supabase
+    .from('entries')
+    .update({reaction: reactionType})
+    .eq('id', entryId)
+    .eq('user_id', user.id)
+    .select()
+    .single()
+
+    if (error) {
+      throw error
+    }
+
+    return data
+}
