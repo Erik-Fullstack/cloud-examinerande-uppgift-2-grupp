@@ -9,6 +9,19 @@ type Reactionprops = {
 
 export default function ReactionButtons({entry}: Reactionprops) {
 const [current, setCurrent] = useState<Entry['reaction']>(entry.reaction);
+const [hovered, setHovered] = useState(false)
+
+let hoverTimeout: ReturnType<typeof setTimeout>
+
+function handleMouseEnter() {
+  clearTimeout(hoverTimeout)
+  hoverTimeout = setTimeout(() => setHovered(true), 50)
+}
+
+function handleMouseLeave() {
+  clearTimeout(hoverTimeout)
+  hoverTimeout = setTimeout(() => setHovered(false), 200)
+}
 
 const REACTIONS = [
   {type: 'like', emoji: '👍'},
@@ -26,7 +39,20 @@ const REACTIONS = [
   }
 
   return (
-    <div className="flex gap-3 mt-2">
+    <div
+  className="relative inline-block"
+  onMouseEnter={() => setHovered(true)}
+  onMouseLeave={() => setHovered(false)}
+>
+  
+  <button className="text-xl opacity-70 hover:opacity-100 transition">
+    {current ? REACTIONS.find(r => r.type === current)?.emoji : '⭐️'}
+  </button>
+
+  <div className="absolute -top-4 -right-4 -left-4 -bottom-4"></div>
+  
+  {hovered && (
+    <div className="absolute top-0 right-full mr-2 flex gap-2 bg-white/10 rounded-xl p-2 shadow-lg backdrop-blur-sm animate-fade-in z-10">
       {REACTIONS.map((r) => (
         <button
           key={r.type}
@@ -39,5 +65,7 @@ const REACTIONS = [
         </button>
       ))}
     </div>
-  );
+  )}
+</div>
+  )
 }

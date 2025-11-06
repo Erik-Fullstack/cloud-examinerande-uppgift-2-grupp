@@ -55,7 +55,7 @@ export async function createEntry(entry: NewEntry): Promise<Entry> {
 }
 
 export async function updateEntryReaction(entryId: string, reactionType: string | null | undefined): Promise<Entry> {
-  console.log('🧩 Uppdaterar entry:', { entryId, reactionType })
+  
   const { data: { user } } = await supabase.auth.getUser()
    if (!user) {
     throw new Error('User not authenticated')
