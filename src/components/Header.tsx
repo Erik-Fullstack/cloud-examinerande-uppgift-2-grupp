@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { signOut } from '@/lib/supabase/auth'
-import { useRouter } from 'next/navigation'
+import { signOut } from "@/lib/supabase/auth";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSignOut = async () => {
     try {
-      await signOut()
-      router.push('/login')
+      await signOut();
+      router.push("/login");
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error("Error signing out:", error);
     }
-  }
+  };
 
   return (
     <header className="border-b border-warm-gray/20 bg-white">
@@ -27,5 +27,5 @@ export default function Header() {
         </button>
       </div>
     </header>
-  )
+  );
 }
