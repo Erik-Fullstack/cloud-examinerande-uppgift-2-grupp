@@ -1,7 +1,11 @@
 import { GoogleGenerativeAI, SchemaType, Schema } from "@google/generative-ai";
-const key: string | undefined = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY : '';
-const genAI = new GoogleGenerativeAI("AIzaSyCC4TR0pZLwNxh3wxSdWSHmSvy1FaDQ-58");
+const key: string | undefined = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
+if(!key) {
+    throw new Error('API_KEY is not defined')
+}
+
+const genAI = new GoogleGenerativeAI(`${key}`);
 
 const schema: Schema = {
   type: SchemaType.OBJECT,
