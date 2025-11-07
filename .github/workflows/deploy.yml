@@ -1,0 +1,43 @@
+name: Build and Deploy Docker to Render
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2. Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 3. Build Docker image with build args
+      - name: Build Docker image
+        run: |
+          IMAGE_NAME="fjserik/cloud-project:optimized"
+          docker build \
+            --build-arg NEXT_PUBLIC_SUPABASE_URL="https://cgshusuuyjajzoscqycv.supabase.co" \
+            --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnc2h1c3V1eWphanpvc2NxeWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MDk4MjEsImV4cCI6MjA3NzM4NTgyMX0.WibD0telCKMsk3PfwZYSMHFQ8hs0F1CbeiG8JWm-9uw" \
+            -t $IMAGE_NAME .
+
+      # 4. Push Docker image to Docker Hub
+      - name: Push Docker image
+        run: |
+          IMAGE_NAME="fjserik/cloud-project:optimized"
+          docker push $IMAGE_NAME
+
+      # 5. Trigger Render deploy
+      - name: Trigger Render deploy
+        run: |
+          IMAGE_NAME="fjserik/cloud-project:optimized"
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}?imgURL=docker.io/$IMAGE_NAME"
