@@ -1,9 +1,9 @@
 import { GoogleGenerativeAI, SchemaType, Schema } from "@google/generative-ai";
-const key: string | undefined = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+const key: string | undefined = process.env.GEMINI_API_KEY;
 
-if(!key) {
-    throw new Error('API_KEY is not defined')
-}
+// if(!key) {
+//     throw new Error('API_KEY is not defined')
+// }
 
 const genAI = new GoogleGenerativeAI(`${key}`);
 
