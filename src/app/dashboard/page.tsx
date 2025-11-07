@@ -6,9 +6,16 @@ import Header from '@/components/Header'
 import EntryCard from '@/components/EntryCard'
 import { getEntries } from '@/lib/supabase/queries'
 import { getCurrentUser } from '@/lib/supabase/auth'
-import { Entry } from '@/types/database.types'
+import { Entry, EntryInput } from '@/types/database.types'
+import GENAI  from '@/lib/geminiAI'
 import Link from 'next/link'
 import SearchBar from '@/components/SearchBar'
+
+interface AIresponse {
+  summary: string,
+  vibe: string,
+  advice: string
+}
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -16,9 +23,19 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [entryFilter, setEntryFilter] = useState<string>("")
+  const [aiEntry, setAiEntry] = useState<AIresponse[]>();
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEntryFilter(e.target.value)
+  }
+  const handleSubmit = async (entries: EntryInput[]) => {
+
+    const summarization: AIresponse[] = await Promise.all( 
+      entries.map(async e => {
+      const result = await GENAI(e.content);
+      return JSON.parse(result)
+    }))
+    setAiEntry(summarization);
   }
   useEffect(() => {
     async function loadData() {
@@ -96,8 +113,20 @@ export default function DashboardPage() {
             {entries.filter(entry => JSON.stringify(entry).toLowerCase().includes(entryFilter.toLowerCase())).map((entry) => (
               <EntryCard key={entry.id} entry={entry} />
             ))}
+        <button onClick={() => handleSubmit(entries) }className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-1 rounded cursor-pointer mr-2 mb-2">
+          Generate AI summarization of your posts
+        </button>
           </div>
         )}
+          {aiEntry && aiEntry.map(e => (
+          <div key={e.vibe} className="relative card" style={{ minWidth: '600px' }}>
+            <h2 className='font-extrabold text-black text-lg'>Vibe: {e.vibe}</h2>
+            <p className="text-warm-gray text-sm">{e.summary}</p>
+            <br/>
+            <h3 className='font-bold text-black text-lg'>Advice</h3>
+            <p className="text-warm-gray text-sm">{e.advice}</p>
+          </div>
+      ))}
       </main>
     </div>
   )
