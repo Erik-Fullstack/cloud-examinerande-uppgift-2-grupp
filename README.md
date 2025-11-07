@@ -7,9 +7,9 @@
 # Repo
 
 ## Branching Strategy
-
+Vi har jobba med "feature/branches" och har satt upp regler att två person måste review och approve, innan det "mergas"
 ## Commit-historik
-
+Den är tydligt pga branching stratigie och skrivit tydliga commits.
 ## Issues och PRs
 
 ## Projektverktyg (GitHub Projects eller Jira)
