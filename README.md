@@ -2,6 +2,7 @@
 
 ## Beskrivning
 Dagbok
+
 ---
 
 # Repo
@@ -23,12 +24,14 @@ Vi började från dockerfilen som fanns i repot från start, vi fortsatte sedan 
 
 ## Bygga och köra projektet med Docker
 Vi satte upp ett github workflow som vid varje PR pushar vår image till docker hub som i sin tur sen hämtas av render och deployar containern automatiskt, denna deploy uppdateras då vid varje PR.
+
 ---
 
 # Tester
 
 ## Testsetup (Jest)
 Vi har implementerat Jest och har kört några grundläggande tester för att se att det fungerar. Vi har även satt upp ett github workflow som testar att bygga vår docker image när vi pushar(mergar) in till main.
+
 ---
 
 # AI-användning
@@ -38,12 +41,14 @@ Vi har använt en hel del ai för att skapa och lära oss om diverse dockerfiler
 Dockerfilen, .github-workflows är genererade av AI, sedan har vi ändrat dessa och uppdaterat eftersom delvis med våra egna ideér och justeringar.
 ## Hur AI använts för tester och utveckling
 Genom att kolla upp och hjälpa till med saker som vi inte hade tillräckligt med kunskap om, genom att ge oss en bättre bild om hur det fungerar och ska göras. Även om vi inte helt själva skulle kunna implementera dessa filer/funktioner så har vi en tillräckligt god kunskap om att förstå vad de gör.
+
 ---
 
 # GitHub Actions
 
 ## Workflows
 Vi har 2 workflows, ett workflow (docker-image) som testar att bygga våra images när vi mergar in branches i main och (deploy) som deployar våra containers från docker hub till render efter att alla tester godkänts efter en merge och uppdaterar våran deployade sida.
+
 ---
 
 # CI/CD-pipelinen
@@ -52,17 +57,21 @@ Vi har 2 workflows, ett workflow (docker-image) som testar att bygga våra image
 Vi har gjort ordentliga commits, skapat tester, merge rules på repot, skapat images, automatiserat workflows och deployat appen.
 ## Pipeline-steg
 Våra pipeline steg är beskrivna kontinuerligt i denna readme fram till den här punkten.
+
 ---
 
 # Motivation för avancerad CI/CD
 Workflows för att vi automatisera deploys och undvika buggar i main, tester för att se till så att allt fungerar.
 Allmänt lära oss mer och få mer kött på benen inom devOps.
+
 ---
 
 # Körning av projektet (lokalt)
 skapa .env med supabase keys. > "npm run dev"
+
 ---
 
 # Bidragsgivare / Team
 Erik Andersson, Filip Hansén, Mladen Kovacic, William Gertoft, openAI.
+
 ---
