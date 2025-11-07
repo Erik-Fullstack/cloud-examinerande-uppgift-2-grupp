@@ -46,7 +46,7 @@ export default function LoginPage() {
             <h1 className="text-4xl font-serif text-dark-brown mb-3">
               Journal
             </h1>
-            <p className="text-warm-gray text-sm">Sign in to your account</p>
+            <p className="text-warm-gray text-sm">SIGNSIGNSIGNSIGNSIGNISGNSIGS in to your account</p>
           </div>
 
           <div className="card">
