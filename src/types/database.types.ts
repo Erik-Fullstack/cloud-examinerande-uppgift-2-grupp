@@ -14,6 +14,10 @@ export interface NewEntry {
   content: string
 }
 
+export interface EntryInput {
+    content: string
+}
+
 export interface UpdateEntry {
   title: string
   content: string
