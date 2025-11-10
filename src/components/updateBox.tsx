@@ -10,6 +10,7 @@ interface EntryCardProps {
   entry: Entry
   setActive: Dispatch<boolean>;
 }
+// Super cool testing
 
 export default function UpdateBox ({entry, setActive}: EntryCardProps) {
 	const router = useRouter();
