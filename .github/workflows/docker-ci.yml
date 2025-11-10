@@ -37,7 +37,7 @@ jobs:
           build-args: | 
             NEXT_PUBLIC_SUPABASE_URL=${{ vars.SUPABASE_URL }} 
             NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
-      
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
       - name: Trigger Render deployment
         if: github.event_name != 'pull_request'
         run: |
