@@ -47,14 +47,18 @@ Genom att kolla upp och hjälpa till med saker som vi inte hade tillräckligt me
 # GitHub Actions
 
 ## Workflows
-Vi har 2 workflows, ett workflow (docker-image) som testar att bygga våra images när vi mergar in branches i main och (deploy) som deployar våra containers från docker hub till render efter att alla tester godkänts efter en merge och uppdaterar våran deployade sida.
+Vi har ett workflow "docker-ci" som vid pull requests till main-branchen gör en check med "build" jobbet och enligt github reglerna så kan mergen enbart godkännas om den bygger en image utan errors.
+
+När mergen sedan händer till main så kommer workflowet att bygga samma image igen (som vi vet fungerar) och pusha den till docker hub.
+
+Till slut efter detta så skickas en webhook till render som automatiskt kollar på den nyaste tagen i docker hub repot och bygger deployment på den.
 
 ---
 
 # CI/CD-pipelinen
 
 ## Förklaring av pipeline
-Vi har gjort ordentliga commits, skapat tester, merge rules på repot, skapat images, automatiserat workflows och deployat appen.
+Vi har gjort ordentliga commits, skapat tester, merge rules på repot, skapat images, automatiserade workflows och deployments.
 ## Pipeline-steg
 Våra pipeline steg är beskrivna kontinuerligt i denna readme fram till den här punkten.
 
