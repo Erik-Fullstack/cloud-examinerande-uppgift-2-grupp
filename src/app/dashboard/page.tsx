@@ -7,7 +7,6 @@ import EntryCard from '@/components/EntryCard'
 import { getEntries } from '@/lib/supabase/queries'
 import { getCurrentUser } from '@/lib/supabase/auth'
 import { Entry, EntryInput } from '@/types/database.types'
-import GENAI  from '@/lib/geminiAI'
 import Link from 'next/link'
 import SearchBar from '@/components/SearchBar'
 
@@ -29,14 +28,26 @@ export default function DashboardPage() {
     setEntryFilter(e.target.value)
   }
   const handleSubmit = async (entries: EntryInput[]) => {
-
-    const summarization: AIresponse[] = await Promise.all( 
+    const summarization: AIresponse[] = await Promise.all(
       entries.map(async e => {
-      const result = await GENAI(e.content);
-      return JSON.parse(result)
-    }))
+        try {
+           const response = await fetch('/api/generate', {
+               method: "POST",
+               headers: {
+                   "Content-type" : "application/json",
+               },
+               body: JSON.stringify(e.content)
+           })
+           const {result} = await response.json();
+           return await JSON.parse(result);
+       } catch (error) {
+           console.error('Error:', error)
+       }
+      })
+    )
     setAiEntry(summarization);
   }
+
   useEffect(() => {
     async function loadData() {
       try {
@@ -119,7 +130,7 @@ export default function DashboardPage() {
           </div>
         )}
           {aiEntry && aiEntry.map(e => (
-          <div key={e.vibe} className="relative card" style={{ minWidth: '600px' }}>
+          <div key={aiEntry.indexOf(e)} className="relative card" style={{ minWidth: '600px' }}>
             <h2 className='font-extrabold text-black text-lg'>Vibe: {e.vibe}</h2>
             <p className="text-warm-gray text-sm">{e.summary}</p>
             <br/>
