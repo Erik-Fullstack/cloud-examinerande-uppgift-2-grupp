@@ -35,10 +35,18 @@ const model = genAI.getGenerativeModel({
     }
 })
 
+export async function POST(req: Request) {
+    const input  = await req.json();
+    try {
+        const result = await GENAI(input);
+        return Response.json({result: result}, {status: 200})
+    } catch (error) {
+        console.error('Failed', error)
+        return Response.json({error: 'Bad input'}, {status: 400})
+    }
+}
+
 export default async function GENAI(prompt: string) {
-    
         const result = await model.generateContent(prompt);
         return result.response.text();
-    
-    
 }
