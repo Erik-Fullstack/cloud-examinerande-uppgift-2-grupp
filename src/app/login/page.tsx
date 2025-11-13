@@ -43,7 +43,7 @@ export default function LoginPage() {
       <div className="min-h-screen flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-serif text-blue-500 mb-3">
+            <h1 className="text-4xl font-serif text-dark-brown mb-3">
               Journal
             </h1>
             <p className="text-warm-gray text-sm">Sign in to your account</p>
@@ -54,9 +54,9 @@ export default function LoginPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm mb-2 text-blue-500"
+                  className="block text-sm mb-2 text-dark-brown"
                 >
-                  REDOVISNING
+                  Email
                 </label>
                 <input
                   id="email"
@@ -72,9 +72,9 @@ export default function LoginPage() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm mb-2 text-blue-500"
+                  className="block text-sm mb-2 text-dark-brown"
                 >
-                  REDOVISNING
+                  Password
                 </label>
                 <input
                   id="password"
